@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco da etec</title>
+</head>
+
+<body>
+    <h1>BANCO DA ETEC</h1>
+    <h3>Primeira pessoa</h3>
+    <p>Nome da pessoa: <span id="nome1"></span></p>
+    <p>Cpf da pessoa: <span id="cpf1"></span></p>
+    <p>Valor antes da transação da pessoa: <span id="valorpre1"></span></p>
+    <p>Valor pos transação da pessoa: <span id="valorpos1"></span></p>
+    <br>
+    <h3>Segunda pessoa</h3>
+    <p>Nome da outra pessoa: <span id="nome2"></span></p>
+    <p>Cpf da outra pessoa: <span id="cpf2"></span></p>
+    <p>Valor antes da transação da outra pessoa: <span id="valorpre2"></span></p>
+    <p>Valor pos transação da outra pessoa: <span id="valorpos2"></span></p>
+    <script>
+        let cpf = [];
+        let nome = [];
+        let saldo = [];
+        let n = 0;
+
+        cpf[0] = "00000000000000001";
+        nome[0] = "a";
+        saldo[0] = 0;
+
+        let inicio = Number(prompt("Escolha a operação: \n 1 - Cadastrar conta \n 2 - Fazer o pix \n 3 - Sair"));
+        while (inicio !== 3) {
+            switch (inicio) {
+                case 1:
+                    let cpf1 = prompt("Digite o cpf");
+                    let nome1 = prompt("Digite o nome");
+                    let saldo1 = Number(prompt("Digite o saldo"));
+                    cadastrarConta(cpf1, nome1, saldo1);
+                    break;
+                case 2:
+                    let cpfA = prompt("Digite o cpf de origem");
+                    let valor = Number(prompt("Digite o valor "));
+                    let cpfB = prompt("Digite o cpf de destino");
+                    fazerPix(cpfA, valor, cpfB);
+                    break;
+                default:
+                    break;
+            }
+            inicio = Number(prompt("Escolha a operação: \n 1 - Cadastrar conta \n 2 - Fazer o pix \n 3 - Sair"));
+        }
+
+        function cadastrarConta(cpf1, nome1, saldo1) {
+            n++;
+            cpf[n] = cpf1;
+            nome[n] = nome1;
+            saldo[n] = saldo1;
+
+            alert("CPF: " + cpf[n] + "\n Nome: " + nome[n] + "\n Saldo: " + saldo[n]);
+        }
+
+        function fazerPix(cpfA, valor, cpfB) {
+
+            for (let index = 0; index < cpf.length; index++) {
+                if (cpfA === cpf[index]) {
+                    document.getElementById("nome1").innerHTML = nome[index];
+                    document.getElementById("cpf1").innerHTML = cpf[index];
+                    document.getElementById("valorpre1").innerHTML = saldo[index];
+                    if (saldo[index] >= valor) {
+                        saldo[index] -= valor;
+                        alert("Pix realizado");
+                        document.getElementById("valorpos1").innerHTML = saldo[index];
+                    } else {
+                        alert("Você não tem dinheiro suficiente para a transação");
+                    }
+                }
+            }
+
+
+            for (let index1 = 1; index1 < cpf.length; index1++) {
+                if (cpfB === cpf[index1]) {
+                    document.getElementById("nome2").innerHTML = nome[index1];
+                    document.getElementById("cpf2").innerHTML = cpf[index1];
+                    document.getElementById("valorpre2").innerHTML = saldo[index1];
+                    saldo[index1] += valor;
+                    document.getElementById("valorpos2").innerHTML = saldo[index1];
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
